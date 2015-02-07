@@ -1,0 +1,11 @@
+https://github.com/rkmalik/DataBaseImplementation.git
+
+echo "# DataBaseImplementation" >> README
+git init
+git add README
+git commit -m "Project 1 Heap File"
+git remote add origin https://github.com/rkmalik/DataBaseImplementation.git
+git push -u origin master
+
+git remote add origin https://github.com/rkmalik/DataBaseImplementation.git
+git push -u origin master
