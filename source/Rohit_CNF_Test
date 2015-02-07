@@ -1,0 +1,5 @@
+
+
+(n_nationkey >0) AND (n_nationkey<25)
+(c_nationkey = 23) AND (c_mktsegment = 'FURNITURE')
+(c_acctbal > 7023.99) AND (c_acctbal < 7110.83)

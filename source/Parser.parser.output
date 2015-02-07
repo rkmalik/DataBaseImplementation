@@ -1,0 +1,235 @@
+Grammar
+
+    0 $accept: AndList $end
+
+    1 AndList: '(' OrList ')' AND AndList
+    2        | '(' OrList ')'
+
+    3 OrList: Condition OR OrList
+    4       | Condition
+
+    5 Condition: Literal Op Literal
+
+    6 Op: '<'
+    7   | '>'
+    8   | '='
+
+    9 Literal: String
+   10        | Float
+   11        | Int
+   12        | Name
+
+
+Terminals, with rules where they appear
+
+$end (0) 0
+'(' (40) 1 2
+')' (41) 1 2
+'<' (60) 6
+'=' (61) 8
+'>' (62) 7
+error (256)
+OR (258) 3
+AND (259) 1
+Name (260) 12
+String (261) 9
+Float (262) 10
+Int (263) 11
+
+
+Nonterminals, with rules where they appear
+
+$accept (14)
+    on left: 0
+AndList (15)
+    on left: 1 2, on right: 0 1
+OrList (16)
+    on left: 3 4, on right: 1 2 3
+Condition (17)
+    on left: 5, on right: 3 4
+Op (18)
+    on left: 6 7 8, on right: 5
+Literal (19)
+    on left: 9 10 11 12, on right: 5
+
+
+State 0
+
+    0 $accept: . AndList $end
+
+    '('  shift, and go to state 1
+
+    AndList  go to state 2
+
+
+State 1
+
+    1 AndList: '(' . OrList ')' AND AndList
+    2        | '(' . OrList ')'
+
+    Name    shift, and go to state 3
+    String  shift, and go to state 4
+    Float   shift, and go to state 5
+    Int     shift, and go to state 6
+
+    OrList     go to state 7
+    Condition  go to state 8
+    Literal    go to state 9
+
+
+State 2
+
+    0 $accept: AndList . $end
+
+    $end  shift, and go to state 10
+
+
+State 3
+
+   12 Literal: Name .
+
+    $default  reduce using rule 12 (Literal)
+
+
+State 4
+
+    9 Literal: String .
+
+    $default  reduce using rule 9 (Literal)
+
+
+State 5
+
+   10 Literal: Float .
+
+    $default  reduce using rule 10 (Literal)
+
+
+State 6
+
+   11 Literal: Int .
+
+    $default  reduce using rule 11 (Literal)
+
+
+State 7
+
+    1 AndList: '(' OrList . ')' AND AndList
+    2        | '(' OrList . ')'
+
+    ')'  shift, and go to state 11
+
+
+State 8
+
+    3 OrList: Condition . OR OrList
+    4       | Condition .
+
+    OR  shift, and go to state 12
+
+    $default  reduce using rule 4 (OrList)
+
+
+State 9
+
+    5 Condition: Literal . Op Literal
+
+    '<'  shift, and go to state 13
+    '>'  shift, and go to state 14
+    '='  shift, and go to state 15
+
+    Op  go to state 16
+
+
+State 10
+
+    0 $accept: AndList $end .
+
+    $default  accept
+
+
+State 11
+
+    1 AndList: '(' OrList ')' . AND AndList
+    2        | '(' OrList ')' .
+
+    AND  shift, and go to state 17
+
+    $default  reduce using rule 2 (AndList)
+
+
+State 12
+
+    3 OrList: Condition OR . OrList
+
+    Name    shift, and go to state 3
+    String  shift, and go to state 4
+    Float   shift, and go to state 5
+    Int     shift, and go to state 6
+
+    OrList     go to state 18
+    Condition  go to state 8
+    Literal    go to state 9
+
+
+State 13
+
+    6 Op: '<' .
+
+    $default  reduce using rule 6 (Op)
+
+
+State 14
+
+    7 Op: '>' .
+
+    $default  reduce using rule 7 (Op)
+
+
+State 15
+
+    8 Op: '=' .
+
+    $default  reduce using rule 8 (Op)
+
+
+State 16
+
+    5 Condition: Literal Op . Literal
+
+    Name    shift, and go to state 3
+    String  shift, and go to state 4
+    Float   shift, and go to state 5
+    Int     shift, and go to state 6
+
+    Literal  go to state 19
+
+
+State 17
+
+    1 AndList: '(' OrList ')' AND . AndList
+
+    '('  shift, and go to state 1
+
+    AndList  go to state 20
+
+
+State 18
+
+    3 OrList: Condition OR OrList .
+
+    $default  reduce using rule 3 (OrList)
+
+
+State 19
+
+    5 Condition: Literal Op Literal .
+
+    $default  reduce using rule 5 (Condition)
+
+
+State 20
+
+    1 AndList: '(' OrList ')' AND AndList .
+
+    $default  reduce using rule 1 (AndList)
